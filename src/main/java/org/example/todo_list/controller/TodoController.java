@@ -63,7 +63,6 @@ public class TodoController {
             return "valueerror";
         }
 
-        System.out.println("sorting st");
         return "tasks";
     }
 
@@ -75,7 +74,6 @@ public class TodoController {
         } catch (UndefinedEnumValueException e) {
             return "valueerror";
         }
-        System.out.println("sorting pr");
         return "tasks";
     }
 

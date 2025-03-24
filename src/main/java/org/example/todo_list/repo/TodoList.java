@@ -34,13 +34,11 @@ public class TodoList {
 
     @SneakyThrows
     public List<Task> sortByPriority() throws UndefinedEnumValueRTException{
-        System.out.println("repo priority");
         return todoList.stream().sorted(this::byPriority).toList();
     }
 
     @SneakyThrows
     public List<Task> sortByStatus() throws UndefinedEnumValueRTException{
-        System.out.println("repo status");
         return todoList.stream().sorted(this::byStatus).toList();
     }
 
