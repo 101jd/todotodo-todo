@@ -3,6 +3,7 @@ package org.example.todo_list.repo;
 import org.example.todo_list.domain.Priority;
 import org.example.todo_list.domain.Status;
 import org.example.todo_list.domain.Task;
+import org.example.todo_list.exc.UndefinedEnumValueException;
 import org.example.todo_list.exc.UndefinedEnumValueRTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,8 +27,9 @@ public class Repo {
             template.update(query,
                     task.getId().toString(),
                     task.getName(),
-                    task.getPriority(),
-                    task.getStatus());
+                    task.getStatus(),
+                    task.getPriority());
+
             return true;
         }catch (DataAccessException e){
             return false;
@@ -36,29 +38,32 @@ public class Repo {
 
     public List<Task> getTasks() throws UndefinedEnumValueRTException {
         String query = "SELECT * FROM todolist";
-        RowMapper<Task> mapper = (rs, rowNum) -> {
-            Task task = new Task();
+        RowMapper<Task> mapper;
 
-            task.setId(UUID.fromString(rs.getString("id")));
-            task.setName(rs.getString("name"));
+            mapper = (rs, rowNum) -> {
+                Task task = new Task();
 
-            task.setStatus(Status.getByName(rs.getString("status")));
+                    task.setId(UUID.fromString(rs.getString("id")));
+                    task.setName(rs.getString("name"));
+                System.out.println(rs.getString("status"));
+                    task.setStatus(Status.getByName(rs.getString("status")));
+                    task.setPriority(Priority.getByName(rs.getString("priority")));
 
-            task.setPriority(Priority.getByName(rs.getString("priority")));
 
-            return task;
-        };
+                return task;
+            };
+
 
         return template.query(query, mapper);
     }
 
-    public void edit(UUID id, String name, String status, String priority){
+    public void edit(String id, String name, String status, String priority){
         String query = "UPDATE todolist SET name = ?, status = ?, priority = ? WHERE id = ?";
 
         template.update(query, name, status, priority, id);
     }
 
-    public Task getBy(UUID id){
+    public Task getBy(UUID id) throws UndefinedEnumValueException {
         return getTasks().stream().filter(task -> task.getId().equals(id)).findFirst().orElse(null);
     }
 }

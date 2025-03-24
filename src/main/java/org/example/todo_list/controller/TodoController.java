@@ -81,13 +81,20 @@ public class TodoController {
 
     @GetMapping("/load")
     public String load(Model model){
-
+        model.addAttribute("task", new Task());
         try {
             model.addAttribute("tasks", service.load());
         } catch (UndefinedEnumValueRTException e) {
+            e.printStackTrace();
             return "valueerror";
         }
         return "tasks";
+    }
+
+    @GetMapping("/clear")
+    public String clear(){
+        service.clear();
+        return "redirect:/tasks";
     }
 }
 

@@ -26,16 +26,6 @@ public class TodoService {
 
     }
 
-//    public Task changePriority(Task task, Priority priority){
-//        task.setPriority(priority);
-//        return task;
-//    }
-//
-//    public Task changeStatus(Task task, Status status){
-//        task.setStatus(status);
-//        return task;
-//    }
-
     public List<Task> sortByPriority() throws UndefinedEnumValueException {
         try {
             return this.todoList.sortByPriority();
@@ -64,11 +54,15 @@ public class TodoService {
     }
 
     public Task edit(Task task, String status, String priority) throws TaskNotFoundException {
-        repo.edit(task.getId(), task.getName(), status, priority);
+        repo.edit(task.getId().toString(), task.getName(), status, priority);
         return todoList.edit(task.getId(), task.getName(), status, priority);
     }
 
     public Task getBy(UUID id){
         return todoList.getBy(id);
+    }
+
+    public void clear(){
+        todoList.clear();
     }
 }

@@ -1,10 +1,12 @@
 package org.example.todo_list.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.UUID;
 
 @Data
+@ToString
 public class Task {
     private UUID id = UUID.randomUUID();
     private String name;
@@ -18,5 +20,6 @@ public class Task {
     public void setPriority(Priority priority) {
         this.priority = priority.name();
     }
+
 
 }

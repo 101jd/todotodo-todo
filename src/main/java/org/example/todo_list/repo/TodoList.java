@@ -77,4 +77,8 @@ public class TodoList {
     public Task getBy(UUID id){
         return todoList.stream().filter(task -> task.getId().equals(id)).findFirst().orElse(null);
     }
+
+    public void clear(){
+        this.todoList.clear();
+    }
 }
