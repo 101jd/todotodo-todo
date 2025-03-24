@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--xmlns="http://www.w3.org/1999/html"-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Todo-List</title>
+</head>
+<body>
+
+<!-- TODOLIST -->
+<div class="list" th:each="task : ${tasks}">
+    <p class="taskname" th:text="${task.name}">name</p>
+
+    <!-- display status and priority -->
+    <p th:text="${task.status}"></p><p th:text="${task.priority}"></p>
+
+    <form th:action="@{/edit}" method="POST">
+        <input type="hidden" name="id" th:value="${task.id}">
+        <input type="hidden" name="name" th:value="${task.name}">
+
+        <select name="status">
+                    <option value="NOT_STARTED" th:text="NOT_STARTED"
+                            selected="${task.status == 'NOT_STARTED'}"></option>
+                    <option value="IN_PROGRESS" th:text="IN_PROGRESS"
+                            selected="${task.status == 'IN_PROGRESS'}"></option>
+                    <option value="COMPLETE" th:text="COMPLETE"
+                            selected="${task.status == 'COMPLETE'}"></option>
+        </select>
+
+        <select name="priority">
+                    <option value="HIGH" th:text="HIGH"
+                            selected="${task.priority == 'HIGH'}"></option>
+                    <option value="MEDIUM" th:text="MEDIUM"
+                            selected="${task.priority == 'MEDIUM'}"></option>
+                    <option value="LOW" th:text="LOW"
+                            selected="${task.priority == 'LOW'}"></option>
+        </select>
+        <!-- edit button -->
+        <button class="edit" type="submit">EDIT</button>
+    </form>
+</div>
+
+ Add new task
+<div class="add">
+    <form action="#" th:action="@{/tasks}" method="POST" th:object="${task}">
+        <input type="text" th:field="*{name}" placeholder="Task...">
+
+        <select th:field="*{status}">
+            <option th:value="NOT_STARTED">NOT STARTED</option>
+            <option th:value="IN_PROGRESS">IN PROGRESS</option>
+            <option th:value="COMPLETE">COMPLETE</option>
+        </select>
+
+        <select th:field="*{priority}">
+            <option th:value="HIGH">HIGH</option>
+            <option th:value="MEDIUM">MEDIUM</option>
+            <option th:value="LOW">LOW</option>
+        </select>
+
+        <button type="submit">ADD TASK</button>
+    </form>
+</div>
+<hr>
+<!--SORTING-->
+<a href="" th:href="@{/sortst}">STATUS</a>
+<a href="" th:href="@{/sortpr}">PRIORITY</a>
+
+</body>
+</html>
