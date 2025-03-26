@@ -45,7 +45,6 @@ public class Repo {
 
                     task.setId(UUID.fromString(rs.getString("id")));
                     task.setName(rs.getString("name"));
-                System.out.println(rs.getString("status"));
                     task.setStatus(Status.getByName(rs.getString("status")));
                     task.setPriority(Priority.getByName(rs.getString("priority")));
 
