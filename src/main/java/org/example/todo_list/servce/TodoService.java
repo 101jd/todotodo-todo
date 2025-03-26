@@ -44,9 +44,9 @@ public class TodoService {
 
     }
 
-    public List<Task> load() throws UndefinedEnumValueRTException {
-        todoList.load(repo.getTasks());
-        return todoList.getTodoList();
+    public List<Task> loadHistory() throws UndefinedEnumValueRTException {
+
+        return todoList.load(repo.getTasks());
     }
 
     public List<Task> getAllTasks(){

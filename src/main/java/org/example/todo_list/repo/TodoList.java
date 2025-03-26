@@ -18,13 +18,19 @@ import java.util.UUID;
 @Getter
 public class TodoList {
     private List<Task> todoList;
+    private List<Task> history;
 
     public TodoList(){
         this.todoList = new LinkedList<>();
+        this.history = new LinkedList<>();
     }
 
-    public boolean load(List<Task> todoList){
-        return this.todoList.addAll(todoList);
+    public List<Task> load(List<Task> todoList){
+        for (Task task : todoList){
+            if (!this.history.contains(task))
+                this.history.add(task);
+        }
+        return this.history;
     }
 
     public boolean add(Task task){

@@ -81,7 +81,7 @@ public class TodoController {
     public String load(Model model){
         model.addAttribute("task", new Task());
         try {
-            model.addAttribute("tasks", service.load());
+            model.addAttribute("tasks", service.loadHistory());
         } catch (UndefinedEnumValueRTException e) {
             e.printStackTrace();
             return "valueerror";
