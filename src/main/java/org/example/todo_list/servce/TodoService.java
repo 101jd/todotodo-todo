@@ -4,7 +4,7 @@ import org.example.todo_list.exc.TaskNotFoundException;
 import org.example.todo_list.domain.Task;
 import org.example.todo_list.exc.UndefinedEnumValueException;
 import org.example.todo_list.exc.UndefinedEnumValueRTException;
-import org.example.todo_list.repo.Repo;
+import org.example.todo_list.repo.Repos;
 import org.example.todo_list.repo.TodoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class TodoService {
     private final TodoList todoList = new TodoList();
 
     @Autowired
-    private Repo repo;
+    private Repos repo;
 
     public Task createNewTask(Task task){
         todoList.add(task);
@@ -54,7 +54,8 @@ public class TodoService {
     }
 
     public Task edit(Task task, String status, String priority) throws TaskNotFoundException {
-        repo.edit(task.getId().toString(), task.getName(), status, priority);
+        Task t = new Task(task.getId(), task.getName(), status, priority);
+        repo.edit(t);
         return todoList.edit(task.getId(), task.getName(), status, priority);
     }
 

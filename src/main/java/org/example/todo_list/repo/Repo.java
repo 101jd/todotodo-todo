@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class Repo {
+public class Repo implements Repos {
 
     @Autowired
     JdbcTemplate template;
@@ -56,10 +56,10 @@ public class Repo {
         return template.query(query, mapper);
     }
 
-    public void edit(String id, String name, String status, String priority){
+    public void edit(Task task){
         String query = "UPDATE todolist SET name = ?, status = ?, priority = ? WHERE id = ?";
 
-        template.update(query, name, status, priority, id);
+        template.update(query, task.getName(), task.getStatus(), task.getPriority(), task.getId());
     }
 
     public Task getBy(UUID id) throws UndefinedEnumValueException {
